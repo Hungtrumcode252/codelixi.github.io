@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Tết</title>
+    <style>
+        /* Đảm bảo toàn bộ trang web có thể tương thích với nhiều màn hình */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffedb5, #ff7a7a); /* Nền Tết */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Định dạng chung cho chữ */
+        h1, h2 {
+            font-size: 5vw; /* Dùng vw để cỡ chữ thay đổi theo kích thước màn hình */
+            color: #d32f2f;
+            padding: 10px;
+            border-radius: 10px;
+            transition: opacity 1s ease, transform 1s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            margin: 0;
+        }
+
+        /* Đảm bảo h2 xuất hiện cao hơn một chút */
+        #message2 {
+            opacity: 0;
+            position: absolute;
+            top: 10%; /* Đưa h2 lên cao hơn một chút */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%; /* Giảm bớt chiều rộng để dễ hiển thị trên màn hình nhỏ */
+            background-color: transparent; /* Màu nền trong suốt */
+            box-shadow: none; /* Không có bóng đổ để nền không bị cắt */
+        }
+
+        /* Hiệu ứng khi hiển thị chữ */
+        h1.show, h2.show {
+            transform: translateY(0);
+        }
+
+        /* Hiệu ứng ảnh lì xì */
+        #lixiImage {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            display: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hiệu ứng khi hover vào ảnh */
+        #lixiImage:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        /* Hiệu ứng khi ảnh được nhấn */
+        #lixiImage:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        /* Hiệu ứng mở ảnh lì xì */
+        #lixiImage.opened {
+            animation: openLixi 0.5s ease forwards;
+        }
+
+        @keyframes openLixi {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.5) rotate(15deg);
+            }
+            100% {
+                transform: translateX(-50%) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Ảnh lớn */
+        #fullImage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: none;
+        }
+    </style>
+    <script>
+        function showMessage() {
+            document.getElementById('message1').innerText = "🌸Chúc Mừng Năm Mới🌸";
+            setTimeout(function() {
+                document.getElementById('message1').style.opacity = 0;
+                document.getElementById('message1').classList.remove('show');
+                setTimeout(function() {
+                    document.getElementById('message2').innerText = "Tớ có bao lì xì tặng cậu nè😊🧧";
+                    document.getElementById('message2').style.opacity = 1;
+                    document.getElementById('message2').classList.add('show');
+                    setTimeout(function() {
+                        document.getElementById('lixiImage').style.display = 'block';
+                    }, 1000);
+                }, 1000);
+            }, 2000);
+        }
+
+        function openLixi() {
+            const lixiImage = document.getElementById('lixiImage');
+            const fullImage = document.getElementById('fullImage');
+
+            // Hiệu ứng mở lì xì
+            lixiImage.classList.add('opened');
+            setTimeout(() => {
+                lixiImage.style.display = 'none'; // Ẩn ảnh nhỏ
+                fullImage.style.display = 'block'; // Hiển thị ảnh lớn
+                setTimeout(() => {
+                    fullImage.style.opacity = 1; // Hiệu ứng làm ảnh lớn hiện ra
+                }, 100);
+            }, 500); // Hiệu ứng mở ảnh nhỏ kéo dài 500ms
+        }
+    </script>
+</head>
+<body onload="showMessage()">
+    <h1 id="message1" class="show"></h1>
+    <h2 id="message2"></h2>
+    
+    <!-- Ảnh lì xì nhỏ -->
+    <img id="lixiImage" src="lixi_image.jpg" alt="Ảnh lì xì" onclick="openLixi()" ontouchstart="openLixi()">
+    
+    <!-- Ảnh lì xì lớn -->
+    <img id="fullImage" src="full_image.jpg" alt="Ảnh lì xì lớn">
+</body>
+</html>
